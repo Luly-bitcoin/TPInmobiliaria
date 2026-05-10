@@ -4,15 +4,18 @@ plugins {
 
 android {
     namespace = "com.luu.tpinmobiliaria"
-    compileSdk {
-        version = release(36) {
-            minorApiLevel = 1
-        }
+
+    compileSdk = 36
+
+    buildFeatures {
+        viewBinding = true
     }
 
     defaultConfig {
         applicationId = "com.luu.tpinmobiliaria"
-        minSdk = 34
+
+        minSdk = 26
+
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
@@ -42,6 +45,9 @@ dependencies {
     implementation(libs.constraintlayout)
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
+    implementation("androidx.navigation:navigation-fragment:2.7.7")
+    implementation("androidx.navigation:navigation-ui:2.7.7")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
