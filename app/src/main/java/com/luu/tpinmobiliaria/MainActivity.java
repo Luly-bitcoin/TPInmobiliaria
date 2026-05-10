@@ -1,6 +1,8 @@
 package com.luu.tpinmobiliaria;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
@@ -27,8 +29,18 @@ public class MainActivity extends AppCompatActivity {
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
 
+        View headerView = navigationView.getHeaderView(0);
+        if (headerView != null) {
+            TextView tvNombre = headerView.findViewById(R.id.tvUsuarioNombre);
+            TextView tvEmail = headerView.findViewById(R.id.tvUsuarioEmail);
+
+            if (tvNombre != null) tvNombre.setText("Luis Javier Mercado");
+            if (tvEmail != null) tvEmail.setText("luisprofessor@gmail.com");
+        }
+
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_inicio, R.id.nav_perfil, R.id.nav_inmuebles, R.id.nav_logout)
+                R.id.nav_inicio, R.id.nav_perfil, R.id.nav_inmuebles,
+                R.id.nav_inquilinos, R.id.nav_contratos, R.id.nav_logout)
                 .setOpenableLayout(drawer)
                 .build();
 
