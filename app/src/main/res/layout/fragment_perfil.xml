@@ -18,6 +18,12 @@
             android:layout_marginBottom="20dp" />
 
         <EditText
+            android:id="@+id/etId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="ID Propietario"
+            android:enabled="false" />
+        <EditText
             android:id="@+id/etDni"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -50,11 +56,19 @@
             android:hint="Teléfono"
             android:inputType="phone" />
 
+        <EditText
+            android:id="@+id/etClave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Contraseña"
+            android:inputType="textPassword"
+            android:enabled="false" />
+
         <Button
             android:id="@+id/btnEditar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="GUARDAR CAMBIOS"
+            android:text="EDITAR"
             android:layout_marginTop="20dp" />
 
     </LinearLayout>
