@@ -1,4 +1,4 @@
-package com.luu.tpinmobiliaria.ui.contratos;
+package com.luu.tpinmobiliaria.ui.inquilinos;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
