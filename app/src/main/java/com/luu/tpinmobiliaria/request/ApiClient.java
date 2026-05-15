@@ -10,11 +10,13 @@ import com.luu.tpinmobiliaria.models.Propietario;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 
 public class ApiClient {
 
@@ -45,10 +47,18 @@ public class ApiClient {
         );
 
         @GET("api/Propietarios")
-        Call<Propietario> obtenerPerfil(
+        Call<Propietario> getPropietario(
                 @Header("Authorization") String token
         );
-    }
+
+        //@GET("api/Inmuebles")
+        //Call<Inmuebles> getInmuebles(@Header("Authorization") String token);
+
+        @PUT("api/Propietarios")
+        Call<Void> actualizarPerfil(
+                @Header("Authorization") String token,
+                @Body Propietario actualizado
+        );    }
 
     public static void recuperarToken(Context context, String token){
 

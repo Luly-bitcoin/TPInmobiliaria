@@ -1,9 +1,13 @@
 package com.luu.tpinmobiliaria.models;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Propietario {
 
+    @SerializedName("idPropietario")
     private int id;
-    private int dni;
+
+    private String dni;
     private String nombre;
     private String apellido;
     private String email;
@@ -14,7 +18,7 @@ public class Propietario {
         return id;
     }
 
-    public int getDni() {
+    public String getDni() {
         return dni;
     }
 

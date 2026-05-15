@@ -1,6 +1,7 @@
 package com.luu.tpinmobiliaria.ui;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,63 +30,46 @@ public class PerfilFragment extends Fragment {
 
     private Button btnEditar;
 
-    public PerfilFragment() {
-    }
+    public PerfilFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.fragment_perfil,
-                container, false);
+        View root = inflater.inflate(R.layout.fragment_perfil, container, false);
 
         etId = root.findViewById(R.id.etId);
-
         etDni = root.findViewById(R.id.etDni);
-
         etNombre = root.findViewById(R.id.etNombre);
-
         etApellido = root.findViewById(R.id.etApellido);
-
         etEmail = root.findViewById(R.id.etEmail);
-
         etTelefono = root.findViewById(R.id.etTelefono);
-
         etClave = root.findViewById(R.id.etClave);
 
         btnEditar = root.findViewById(R.id.btnEditar);
 
         cargarPerfil();
-
         desactivarEdicion();
 
         btnEditar.setOnClickListener(v -> {
 
-            if(!editando){
+            if (!editando) {
 
                 activarEdicion();
-
                 btnEditar.setText("GUARDAR");
-
                 editando = true;
 
-            }else{
+            } else {
 
                 guardarCambios();
-
-                desactivarEdicion();
-
-                btnEditar.setText("EDITAR");
-
-                editando = false;
             }
         });
 
         return root;
     }
 
-    private void cargarPerfil(){
+    private void guardarCambios() {
 
         String token = "Bearer " +
                 ApiClient.obtenerToken(getContext());
@@ -93,76 +77,111 @@ public class PerfilFragment extends Fragment {
         ApiClient.MiServicioInmobiliaria api =
                 ApiClient.getServicio();
 
-        Call<Propietario> llamada =
-                api.obtenerPerfil(token);
+        Propietario actualizado = new Propietario();
+        actualizado.setNombre(etNombre.getText().toString());
+        actualizado.setApellido(etApellido.getText().toString());
+        actualizado.setEmail(etEmail.getText().toString());
+        actualizado.setTelefono(etTelefono.getText().toString());
 
-        llamada.enqueue(new Callback<Propietario>() {
+        Call<Void> llamada = api.actualizarPerfil(token, actualizado);
+
+        llamada.enqueue(new Callback<Void>() {
 
             @Override
-            public void onResponse(Call<Propietario> call,
-                                   Response<Propietario> response) {
+            public void onResponse(Call<Void> call, Response<Void> response) {
 
-                if(response.isSuccessful()){
-
-                    Propietario p = response.body();
-
-                    etId.setText(String.valueOf(p.getId()));
-
-                    etDni.setText(String.valueOf(p.getDni()));
-
-                    etNombre.setText(p.getNombre());
-
-                    etApellido.setText(p.getApellido());
-
-                    etEmail.setText(p.getEmail());
-
-                    etTelefono.setText(p.getTelefono());
-
-                    etClave.setText(p.getClave());
-
-                }else{
+                if (response.isSuccessful()) {
 
                     Toast.makeText(getContext(),
-                            "Error al cargar perfil",
+                            "Perfil actualizado",
+                            Toast.LENGTH_SHORT).show();
+
+                    editando = false;
+                    btnEditar.setText("EDITAR");
+                    desactivarEdicion();
+                    cargarPerfil();
+
+                } else {
+                    Toast.makeText(getContext(),
+                            "Error al actualizar",
                             Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<Propietario> call,
-                                  Throwable t) {
+            public void onFailure(Call<Void> call, Throwable t) {
 
                 Toast.makeText(getContext(),
-                        t.getMessage(),
+                        "Error: " + t.getMessage(),
                         Toast.LENGTH_LONG).show();
             }
         });
     }
 
-    private void activarEdicion(){
+    private void activarEdicion() {
 
         etNombre.setEnabled(true);
         etApellido.setEnabled(true);
         etEmail.setEnabled(true);
         etTelefono.setEnabled(true);
+
+        etNombre.requestFocus();
     }
 
-    private void desactivarEdicion(){
+    private void desactivarEdicion() {
 
         etNombre.setEnabled(false);
         etApellido.setEnabled(false);
         etEmail.setEnabled(false);
         etTelefono.setEnabled(false);
 
-        etDni.setEnabled(false);
         etId.setEnabled(false);
+        etDni.setEnabled(false);
         etClave.setEnabled(false);
     }
 
-    private void guardarCambios(){
+    private void cargarPerfil() {
 
-        Toast.makeText(getContext(),
-                "Cambios guardados",
-                Toast.LENGTH_SHORT).show();
+        String token = "Bearer " + ApiClient.obtenerToken(getContext());
+
+        ApiClient.MiServicioInmobiliaria api =
+                ApiClient.getServicio();
+
+        Call<Propietario> call = api.getPropietario(token);
+
+        call.enqueue(new Callback<Propietario>() {
+            @Override
+            public void onResponse(Call<Propietario> call, Response<Propietario> response) {
+
+                if (response.isSuccessful()) {
+
+                    Propietario p = response.body();
+
+                    if (p != null) {
+                        etNombre.setText(p.getNombre());
+                        etApellido.setText(p.getApellido());
+                        etEmail.setText(p.getEmail());
+                        etTelefono.setText(p.getTelefono());
+                    } else {
+                        Toast.makeText(getContext(), "Body vacío", Toast.LENGTH_LONG).show();
+                    }
+
+                } else {
+                    try {
+                        Log.e("API_ERROR", response.errorBody().string());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                Log.d("API_CODE", String.valueOf(response.code()));
+                Log.d("API_BODY", String.valueOf(response.body()));
+                Log.e("API_ERROR", String.valueOf(response.errorBody()));
+            }
+
+            @Override
+            public void onFailure(Call<Propietario> call, Throwable t) {
+                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }
