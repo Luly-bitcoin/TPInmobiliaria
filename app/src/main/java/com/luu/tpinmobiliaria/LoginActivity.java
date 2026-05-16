@@ -36,6 +36,11 @@ public class LoginActivity extends AppCompatActivity {
         String usuario = etCorreo.getText().toString();
         String clave = etClave.getText().toString();
 
+        if (usuario.isEmpty() || clave.isEmpty()) {
+            Toast.makeText(LoginActivity.this, "Complete los campos", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         ApiClient.MiServicioInmobiliaria api = ApiClient.getServicio();
 
         Call<String> llamada = api.loginForm(usuario, clave);
@@ -47,6 +52,7 @@ public class LoginActivity extends AppCompatActivity {
                 if(response.isSuccessful()){
 
                     String token = response.body();
+                    ApiClient.recuperarToken(LoginActivity.this, token);
 
                     Toast.makeText(LoginActivity.this,
                             "Login Correcto",

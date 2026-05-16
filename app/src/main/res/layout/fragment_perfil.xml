@@ -23,6 +23,7 @@
             android:layout_height="wrap_content"
             android:hint="ID Propietario"
             android:enabled="false" />
+
         <EditText
             android:id="@+id/etDni"
             android:layout_width="match_parent"
@@ -34,27 +35,31 @@
             android:id="@+id/etNombre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nombre" />
+            android:hint="Nombre"
+            android:enabled="false" />
 
         <EditText
             android:id="@+id/etApellido"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Apellido" />
+            android:hint="Apellido"
+            android:enabled="false" />
 
         <EditText
             android:id="@+id/etEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Correo Electrónico"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            android:enabled="false" />
 
         <EditText
             android:id="@+id/etTelefono"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Teléfono"
-            android:inputType="phone" />
+            android:inputType="phone"
+            android:enabled="false" />
 
         <EditText
             android:id="@+id/etClave"

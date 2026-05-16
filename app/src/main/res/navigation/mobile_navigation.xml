@@ -31,6 +31,11 @@
         android:id="@+id/nav_contratos"
         android:name="com.luu.tpinmobiliaria.ui.contratos.ContratosFragment"
         android:label="Contratos" />
+    <fragment
+        android:id="@+id/nav_cambiar_password"
+        android:name="com.luu.tpinmobiliaria.ui.cambiar_password.CambiarPasswordFragment"
+        android:label="Cambiar Contraseña"
+        tools:layout="@layout/fragment_cambiar_password" />
 
     <fragment
         android:id="@+id/nav_logout"
