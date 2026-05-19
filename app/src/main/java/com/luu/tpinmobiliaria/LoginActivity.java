@@ -35,19 +35,51 @@ public class LoginActivity extends AppCompatActivity {
 
     private void login(){
 
-        String usuario = etCorreo.getText().toString();
-        String clave = etClave.getText().toString();
+        String usuario = etCorreo.getText().toString().trim();
+        String clave = etClave.getText().toString().trim();
 
         if (usuario.isEmpty() || clave.isEmpty()) {
             Toast.makeText(LoginActivity.this, "Complete los campos", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        Toast.makeText(this, "Login correcto", Toast.LENGTH_SHORT).show();
+        ApiClient.getServicio()
+                .loginForm(usuario, clave)
+                .enqueue(new retrofit2.Callback<String>() {
 
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-        startActivity(intent);
-        finish();
+                    @Override
+                    public void onResponse(retrofit2.Call<String> call,
+                                           retrofit2.Response<String> response) {
+
+                        if (response.isSuccessful() && response.body() != null) {
+
+                            String token = response.body();
+
+                            // guardar token
+                            ApiClient.recuperarToken(LoginActivity.this, token);
+
+                            Toast.makeText(LoginActivity.this,
+                                    "Login exitoso",
+                                    Toast.LENGTH_SHORT).show();
+
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            startActivity(intent);
+                            finish();
+
+                        } else {
+                            Toast.makeText(LoginActivity.this,
+                                    "Usuario o clave incorrectos",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(retrofit2.Call<String> call, Throwable t) {
+                        Toast.makeText(LoginActivity.this,
+                                "Error de conexión: " + t.getMessage(),
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private void olvideContrasena() {
