@@ -43,6 +43,11 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
+        Toast.makeText(this, "Login correcto", Toast.LENGTH_SHORT).show();
+
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void olvideContrasena() {
