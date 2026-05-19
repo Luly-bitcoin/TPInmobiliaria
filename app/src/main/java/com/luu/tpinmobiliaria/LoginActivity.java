@@ -1,5 +1,7 @@
 package com.luu.tpinmobiliaria;
 
+import static com.luu.tpinmobiliaria.R.layout.activity_login;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
@@ -20,7 +22,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(activity_login);
 
         etCorreo = findViewById(R.id.etEmail);
         etClave = findViewById(R.id.etPassword);
