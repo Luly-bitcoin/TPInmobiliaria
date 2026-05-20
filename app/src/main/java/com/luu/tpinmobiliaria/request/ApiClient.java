@@ -54,11 +54,20 @@ public class ApiClient {
         //@GET("api/Inmuebles")
         //Call<Inmuebles> getInmuebles(@Header("Authorization") String token);
 
-        @PUT("api/Propietarios")
-        Call<Void> actualizarPerfil(
+        @PUT("api/Propietarios/actualizar")
+        Call<Propietario> actualizarPerfil(
                 @Header("Authorization") String token,
                 @Body Propietario actualizado
-        );    }
+        );
+        @FormUrlEncoded
+        @PUT("api/Propietarios/changePassword")
+        Call<Void> cambiarPassword(
+                @Header("Authorization") String token,
+                @Field("currentPassword") String currentPassword,
+                @Field("newPassword") String newPassword
+        );
+
+    }
 
     public static void recuperarToken(Context context, String token){
 

@@ -69,20 +69,25 @@ public class PerfilViewModel extends AndroidViewModel {
 
         String token = "Bearer " + ApiClient.obtenerToken(getApplication());
 
-        ApiClient.getServicio().actualizarPerfil(token, propietario).enqueue(new Callback<Void>() {
+        ApiClient.getServicio().actualizarPerfil(token, propietario).enqueue(new Callback<Propietario>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
+            public void onResponse(Call<Propietario> call, Response<Propietario> response) {
                 if (response.isSuccessful()) {
                     mPropietario.setValue(propietario);
                     mEditable.setValue(false);
                     Toast.makeText(getApplication(), "Datos guardados correctamente", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(getApplication(), "Error al actualizar", Toast.LENGTH_SHORT).show();
+                    try {
+                        String error = response.errorBody().string();
+                        Toast.makeText(getApplication(), error, Toast.LENGTH_LONG).show();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 
             @Override
-            public void onFailure(Call<Void> call, Throwable t) {
+            public void onFailure(Call<Propietario> call, Throwable t) {
                 Toast.makeText(getApplication(), "Error de red", Toast.LENGTH_SHORT).show();
             }
         });

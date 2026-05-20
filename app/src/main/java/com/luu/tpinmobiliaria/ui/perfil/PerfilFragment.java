@@ -23,7 +23,7 @@ public class PerfilFragment extends Fragment {
             @Override
             public void onChanged(Propietario propietario) {
                 binding.etId.setText(String.valueOf(propietario.getId()));
-                binding.etDni.setText(propietario.getDni());
+                binding.etDni.setText(String.valueOf(propietario.getDni()));
                 binding.etNombre.setText(propietario.getNombre());
                 binding.etApellido.setText(propietario.getApellido());
                 binding.etEmail.setText(propietario.getEmail());
