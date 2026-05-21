@@ -26,6 +26,10 @@
         <action
             android:id="@+id/action_nav_inmuebles_to_nav_detalle_inmueble"
             app:destination="@id/nav_detalle_inmueble" />
+
+        <action
+            android:id="@+id/action_nav_inmuebles_to_nav_agregar_inmueble"
+            app:destination="@id/nav_agregar_inmueble" />
     </fragment>
 
     <fragment
@@ -35,7 +39,7 @@
 
     <fragment
         android:id="@+id/nav_contratos"
-        android:name="com.luu.tpinmobiliaria.ui.contratos.ContratosFragment"
+        android:name="com.luu.tpinmobiliaria.ui.inquilinos.ContratosFragment"
         android:label="Contratos" />
 
     <fragment
@@ -54,5 +58,11 @@
         android:name="com.luu.tpinmobiliaria.ui.inmuebles.DetalleInmuebleFragment"
         android:label="Detalle de Inmueble"
         tools:layout="@layout/fragment_detalle_inmueble" />
+
+    <fragment
+        android:id="@+id/nav_agregar_inmueble"
+        android:name="com.luu.tpinmobiliaria.ui.inmuebles.AgregarInmuebleFragment"
+        android:label="Agregar Inmueble"
+        tools:layout="@layout/fragment_agregar_inmueble" />
 
 </navigation>

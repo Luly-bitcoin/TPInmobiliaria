@@ -6,7 +6,12 @@ import android.content.SharedPreferences;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.luu.tpinmobiliaria.models.Propietario;
+import com.luu.tpinmobiliaria.ui.inmuebles.Inmueble;
 
+import java.util.List;
+
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -15,13 +20,14 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Part;
 
 public class ApiClient {
 
-    public final static String BASE_URL =
-            "https://capacitacion.alwaysdata.net/";
+    public final static String BASE_URL = "https://capacitacion.alwaysdata.net/";
 
     public static MiServicioInmobiliaria getServicio(){
 
@@ -51,14 +57,17 @@ public class ApiClient {
                 @Header("Authorization") String token
         );
 
-        //@GET("api/Inmuebles")
-        //Call<Inmuebles> getInmuebles(@Header("Authorization") String token);
+        @GET("api/Inmuebles")
+        Call<List<Inmueble>> getInmuebles(
+                @Header("Authorization") String token
+        );
 
         @PUT("api/Propietarios/actualizar")
         Call<Propietario> actualizarPerfil(
                 @Header("Authorization") String token,
                 @Body Propietario actualizado
         );
+
         @FormUrlEncoded
         @PUT("api/Propietarios/changePassword")
         Call<Void> cambiarPassword(
@@ -67,6 +76,19 @@ public class ApiClient {
                 @Field("newPassword") String newPassword
         );
 
+        @PUT("api/Inmuebles/actualizar")
+        Call<Inmueble> actualizarInmueble(
+                @Header("Authorization") String token,
+                @Body Inmueble inmueble
+        );
+
+        @Multipart
+        @POST("api/Inmuebles/cargar")
+        Call<Inmueble> cargarInmueble(
+                @Header("Authorization") String token,
+                @Part MultipartBody.Part imagen,
+                @Part("inmueble") RequestBody inmuebleJson
+        );
     }
 
     public static void recuperarToken(Context context, String token){

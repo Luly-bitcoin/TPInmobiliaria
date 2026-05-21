@@ -1,13 +1,21 @@
 package com.luu.tpinmobiliaria.ui.inmuebles;
 
 import android.app.Application;
+import android.content.Context;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import com.luu.tpinmobiliaria.ui.inmuebles.Inmueble;
-import java.util.ArrayList;
+
+import com.luu.tpinmobiliaria.request.ApiClient;
+
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class InmueblesViewModel extends AndroidViewModel {
 
@@ -20,46 +28,32 @@ public class InmueblesViewModel extends AndroidViewModel {
     public LiveData<List<Inmueble>> getInmuebles() {
         if (mInmuebles == null) {
             mInmuebles = new MutableLiveData<>();
+            cargarInmuebles();
         }
         return mInmuebles;
     }
 
     public void cargarInmuebles() {
-        List<Inmueble> lista = new ArrayList<>();
+        Context context = getApplication().getApplicationContext();
+        String token = ApiClient.obtenerToken(context);
 
-        Inmueble i1 = new Inmueble();
-        i1.setIdInmueble(1);
-        i1.setDireccion("Av. Mitre 1234");
-        i1.setPrecio(150000);
-        i1.setEstado(true);
-        i1.setAvatar("");
+        ApiClient.MiServicioInmobiliaria api = ApiClient.getServicio();
+        Call<List<Inmueble>> llamada = api.getInmuebles(token);
 
-        Inmueble i2 = new Inmueble();
-        i2.setIdInmueble(2);
-        i2.setDireccion("Calle Lavalle 567");
-        i2.setPrecio(220000);
-        i2.setEstado(false);
-        i2.setAvatar("");
+        llamada.enqueue(new Callback<List<Inmueble>>() {
+            @Override
+            public void onResponse(Call<List<Inmueble>> call, Response<List<Inmueble>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    mInmuebles.setValue(response.body());
+                } else {
+                    Toast.makeText(context, "Error al obtener inmuebles", Toast.LENGTH_SHORT).show();
+                }
+            }
 
-        Inmueble i3 = new Inmueble();
-        i3.setIdInmueble(3);
-        i3.setDireccion("Pedernera 890");
-        i3.setPrecio(180000);
-        i3.setEstado(true);
-        i3.setAvatar("");
-
-        Inmueble i4 = new Inmueble();
-        i4.setIdInmueble(4);
-        i4.setDireccion("Marconi 112");
-        i4.setPrecio(250000);
-        i4.setEstado(true);
-        i4.setAvatar("");
-
-        lista.add(i1);
-        lista.add(i2);
-        lista.add(i3);
-        lista.add(i4);
-
-        mInmuebles.setValue(lista);
+            @Override
+            public void onFailure(Call<List<Inmueble>> call, Throwable t) {
+                Toast.makeText(context, "Error de conexión", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

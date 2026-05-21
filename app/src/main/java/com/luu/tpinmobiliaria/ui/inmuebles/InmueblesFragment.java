@@ -8,7 +8,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
+import com.luu.tpinmobiliaria.R;
 import com.luu.tpinmobiliaria.databinding.FragmentInmueblesBinding;
 
 public class InmueblesFragment extends Fragment {
@@ -31,6 +33,10 @@ public class InmueblesFragment extends Fragment {
         viewModel.getInmuebles().observe(getViewLifecycleOwner(), lista -> {
             InmueblesAdapter adapter = new InmueblesAdapter(lista, requireContext());
             binding.rvInmuebles.setAdapter(adapter);
+        });
+
+        binding.fabAgregarInmueble.setOnClickListener(v -> {
+            Navigation.findNavController(v).navigate(R.id.action_nav_inmuebles_to_nav_agregar_inmueble);
         });
 
         viewModel.cargarInmuebles();
