@@ -39,7 +39,7 @@
 
     <fragment
         android:id="@+id/nav_contratos"
-        android:name="com.luu.tpinmobiliaria.ui.inquilinos.ContratosFragment"
+        android:name="com.luu.tpinmobiliaria.ui.contratos.ContratosFragment"
         android:label="Contratos" />
 
     <fragment

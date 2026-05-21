@@ -67,6 +67,10 @@ public class ApiClient {
                 @Header("Authorization") String token,
                 @Body Propietario actualizado
         );
+        @GET("api/Inmuebles/GetContratoVigente")
+        Call<List<Inmueble>> obtenerInmueblesAlquilados(
+                @Header("Authorization") String token
+        );
 
         @FormUrlEncoded
         @PUT("api/Propietarios/changePassword")
