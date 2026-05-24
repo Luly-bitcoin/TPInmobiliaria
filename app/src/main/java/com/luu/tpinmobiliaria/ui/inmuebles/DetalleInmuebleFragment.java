@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 import com.luu.tpinmobiliaria.R;
+import com.luu.tpinmobiliaria.request.ApiClient;
 
 public class DetalleInmuebleFragment extends Fragment {
 
@@ -48,9 +49,13 @@ public class DetalleInmuebleFragment extends Fragment {
             cbDisponible.setChecked(est);
 
             if (avatar != null && !avatar.isEmpty()) {
+
+                String urlImagen = ApiClient.BASE_URL + avatar;
+
                 Glide.with(requireContext())
-                        .load(avatar)
+                        .load(urlImagen)
                         .into(ivFoto);
+
             } else {
                 ivFoto.setImageResource(android.R.drawable.ic_menu_gallery);
             }

@@ -12,6 +12,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.luu.tpinmobiliaria.R;
@@ -38,7 +39,6 @@ public class InicioFragment extends Fragment implements OnMapReadyCallback {
 
         return binding.getRoot();
     }
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
@@ -50,7 +50,19 @@ public class InicioFragment extends Fragment implements OnMapReadyCallback {
                 .position(ulp)
                 .title("Universidad de La Punta"));
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ulp, 17));
+        mMap.setBuildingsEnabled(true);
+        mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(ulp)
+                .zoom(18)
+                .tilt(70)
+                .bearing(45)
+                .build();
+
+        mMap.animateCamera(
+                CameraUpdateFactory.newCameraPosition(cameraPosition)
+        );
     }
 
     @Override

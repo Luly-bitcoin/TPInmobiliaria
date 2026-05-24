@@ -38,7 +38,7 @@ public class InmueblesViewModel extends AndroidViewModel {
         String token = ApiClient.obtenerToken(context);
 
         ApiClient.MiServicioInmobiliaria api = ApiClient.getServicio();
-        Call<List<Inmueble>> llamada = api.getInmuebles(token);
+        Call<List<Inmueble>> llamada = api.getInmuebles("Bearer " + token);
 
         llamada.enqueue(new Callback<List<Inmueble>>() {
             @Override

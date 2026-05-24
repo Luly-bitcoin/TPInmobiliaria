@@ -52,9 +52,13 @@ public class InmueblesAdapter extends RecyclerView.Adapter<InmueblesAdapter.View
         holder.swDisponible.setChecked(inmueble.isEstado());
 
         if (inmueble.getAvatar() != null && !inmueble.getAvatar().isEmpty()) {
+
+            String urlImagen = ApiClient.BASE_URL + inmueble.getAvatar();
+
             Glide.with(context)
-                    .load(inmueble.getAvatar())
+                    .load(urlImagen)
                     .into(holder.ivFoto);
+
         } else {
             holder.ivFoto.setImageResource(android.R.drawable.ic_menu_gallery);
         }
@@ -63,7 +67,7 @@ public class InmueblesAdapter extends RecyclerView.Adapter<InmueblesAdapter.View
             inmueble.setEstado(isChecked);
             String token = ApiClient.obtenerToken(context);
             ApiClient.MiServicioInmobiliaria api = ApiClient.getServicio();
-            Call<Inmueble> llamada = api.actualizarInmueble(token, inmueble);
+            Call<Inmueble> llamada = api.actualizarInmueble("Bearer " + token, inmueble);
 
             llamada.enqueue(new Callback<Inmueble>() {
                 @Override

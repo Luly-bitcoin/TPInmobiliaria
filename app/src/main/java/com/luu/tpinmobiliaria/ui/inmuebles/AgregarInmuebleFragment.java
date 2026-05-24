@@ -116,7 +116,7 @@ public class AgregarInmuebleFragment extends Fragment {
         String token = ApiClient.obtenerToken(context);
 
         ApiClient.MiServicioInmobiliaria api = ApiClient.getServicio();
-        Call<Inmueble> llamada = api.cargarInmueble(token, imagenPart, inmueblePart);
+        Call<Inmueble> llamada = api.cargarInmueble("Bearer " + token, imagenPart, inmueblePart);
 
         llamada.enqueue(new Callback<Inmueble>() {
             @Override
