@@ -4,7 +4,6 @@ import com.google.gson.annotations.SerializedName;
 
 public class Inmueble {
 
-    @SerializedName("idInmueble")
     private int idInmueble;
 
     @SerializedName("direccion")

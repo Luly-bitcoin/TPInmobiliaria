@@ -65,4 +65,10 @@
         android:label="Agregar Inmueble"
         tools:layout="@layout/fragment_agregar_inmueble" />
 
+    <fragment
+        android:id="@+id/contratoDetalleFragment"
+        android:name="com.luu.tpinmobiliaria.ui.contratos.ContratoDetalleFragment"
+        android:label="Detalle Contrato" />
+
+
 </navigation>

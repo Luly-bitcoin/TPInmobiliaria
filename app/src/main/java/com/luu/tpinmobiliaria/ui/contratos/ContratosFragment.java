@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
+
+import com.luu.tpinmobiliaria.R;
 import com.luu.tpinmobiliaria.databinding.FragmentContratosBinding;
 
 public class ContratosFragment extends Fragment {
@@ -22,7 +24,13 @@ public class ContratosFragment extends Fragment {
         binding.rvContratos.setLayoutManager(new LinearLayoutManager(getContext()));
 
         viewModel.getMListaInmuebles().observe(getViewLifecycleOwner(), inmuebles -> {
-            ContratosAdapter adapter = new ContratosAdapter(inmuebles);
+            ContratosAdapter adapter = new ContratosAdapter(inmuebles, inmueble -> {
+                Bundle bundle = new Bundle();
+                bundle.putInt("idInmueble", inmueble.getIdInmueble());
+                androidx.navigation.Navigation.findNavController(binding.getRoot())
+                        .navigate(R.id.contratoDetalleFragment, bundle);
+
+            });
             binding.rvContratos.setAdapter(adapter);
         });
 

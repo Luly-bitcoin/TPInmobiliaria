@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.luu.tpinmobiliaria.ui.contratos.Contrato;
 import com.luu.tpinmobiliaria.models.Propietario;
 import com.luu.tpinmobiliaria.ui.inmuebles.Inmueble;
 
@@ -24,6 +25,7 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Part;
+import retrofit2.http.Path;
 
 public class ApiClient {
 
@@ -92,6 +94,12 @@ public class ApiClient {
                 @Header("Authorization") String token,
                 @Part MultipartBody.Part imagen,
                 @Part("inmueble") RequestBody inmuebleJson
+        );
+
+        @GET("api/contratos/inmueble/{id}")
+        Call<Contrato> obtenerContrato(
+                @Header("Authorization") String token,
+                @Path("id") int id
         );
     }
 
