@@ -4,14 +4,14 @@ Aplicación móvil Android desarrollada en Java para la gestión de inmuebles, p
 
 ## Características
 
-- Login de propietarios
-- Visualización de inmuebles
-- Detalle de cada inmueble
-- Cambio de disponibilidad
-- Perfil del propietario
-- Cambio de contraseña
-- Integración con API REST
-- Google Maps con vista híbrida y efecto 3D
+- Login de propietarios (Lourdes)
+- Visualización de inmuebles (Milena)
+- Detalle de cada inmueble (Milena)
+- Cambio de disponibilidad (Milena)
+- Perfil del propietario (Lourdes y Milena)
+- Cambio de contraseña (Milena)
+- Integración con API REST (Lourdes)
+- Google Maps con vista híbrida y efecto 3D (Lourdes)
 
 ## Arquitectura
 
