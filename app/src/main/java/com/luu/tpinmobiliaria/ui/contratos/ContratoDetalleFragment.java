@@ -4,84 +4,54 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import com.luu.tpinmobiliaria.R;
-import com.luu.tpinmobiliaria.request.ApiClient;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class ContratoDetalleFragment extends Fragment {
 
     private TextView tvInquilino, tvFechaInicio, tvFechaFin, tvMonto;
+    private Button btnVerPagos;
+    private ContratoDetalleViewModel viewModel;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container,
-                             Bundle savedInstanceState) {
-
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_detalle_contrato, container, false);
 
         tvInquilino = view.findViewById(R.id.tvInquilino);
         tvFechaInicio = view.findViewById(R.id.tvFechaInicio);
         tvFechaFin = view.findViewById(R.id.tvFechaFin);
         tvMonto = view.findViewById(R.id.tvMonto);
-
-        int idInmueble = getArguments().getInt("idInmueble");
-        Toast.makeText(requireContext(),
-                "ID inmueble: " + idInmueble,
-                Toast.LENGTH_SHORT).show();
-
-        String token = "Bearer " + ApiClient.obtenerToken(requireContext());
-
-        ApiClient.getServicio().obtenerContrato(token, idInmueble)
-                .enqueue(new Callback<Contrato>() {
-                    @Override
-                    public void onResponse(Call<Contrato> call, Response<Contrato> response) {
-
-                        if(response.isSuccessful() && response.body() != null){
-
-                            Contrato contrato = response.body();
-
-                            tvInquilino.setText(
-                                    contrato.getInquilino().getNombre()
-                                            + " " +
-                                            contrato.getInquilino().getApellido()
-                            );
-
-                            tvFechaInicio.setText(
-                                    contrato.getFechaInicio()
-                            );
-
-                            tvFechaFin.setText(
-                                    contrato.getFechaFinalizacion()
-                            );
-
-                            tvMonto.setText(
-                                    "$" + String.format("%.0f", contrato.getMontoAlquiler())
-                            );
-
-                        }else{
-                            Toast.makeText(requireContext(),
-                                    "No se pudo obtener el contrato",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<Contrato> call, Throwable t) {
-
-                        Toast.makeText(requireContext(),
-                                t.getMessage(),
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
+        btnVerPagos = view.findViewById(R.id.btnVerPagos);
 
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        viewModel = new ViewModelProvider(this).get(ContratoDetalleViewModel.class);
+
+        int idInmueble = getArguments().getInt("idInmueble");
+
+        viewModel.getMContrato().observe(getViewLifecycleOwner(), contrato -> {
+            tvInquilino.setText(contrato.getInquilino().getNombre() + " " + contrato.getInquilino().getApellido());
+            tvFechaInicio.setText(contrato.getFechaInicio());
+            tvFechaFin.setText(contrato.getFechaFinalizacion());
+            tvMonto.setText("$" + String.format("%.0f", contrato.getMontoAlquiler()));
+
+            btnVerPagos.setOnClickListener(v -> {
+                Bundle bundle = new Bundle();
+                bundle.putInt("idContrato", contrato.getIdContrato());
+                Navigation.findNavController(view).navigate(R.id.pagosFragment, bundle);
+            });
+        });
+
+        viewModel.cargarContrato(idInmueble);
     }
 }

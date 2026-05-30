@@ -22,11 +22,9 @@
         android:name="com.luu.tpinmobiliaria.ui.inmuebles.InmueblesFragment"
         android:label="Mis Inmuebles"
         tools:layout="@layout/fragment_inmuebles">
-
         <action
             android:id="@+id/action_nav_inmuebles_to_nav_detalle_inmueble"
             app:destination="@id/nav_detalle_inmueble" />
-
         <action
             android:id="@+id/action_nav_inmuebles_to_nav_agregar_inmueble"
             app:destination="@id/nav_agregar_inmueble" />
@@ -35,12 +33,20 @@
     <fragment
         android:id="@+id/nav_inquilinos"
         android:name="com.luu.tpinmobiliaria.ui.inquilinos.InquilinosFragment"
-        android:label="Inquilinos" />
+        android:label="Inquilinos">
+        <action
+            android:id="@+id/action_nav_inquilinos_to_inquilinoDetalleFragment"
+            app:destination="@id/inquilinoDetalleFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_contratos"
         android:name="com.luu.tpinmobiliaria.ui.contratos.ContratosFragment"
-        android:label="Contratos" />
+        android:label="Contratos">
+        <action
+            android:id="@+id/action_nav_contratos_to_contratoDetalleFragment"
+            app:destination="@id/contratoDetalleFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_cambiar_password"
@@ -68,7 +74,22 @@
     <fragment
         android:id="@+id/contratoDetalleFragment"
         android:name="com.luu.tpinmobiliaria.ui.contratos.ContratoDetalleFragment"
-        android:label="Detalle Contrato" />
+        android:label="Detalle Contrato">
+        <action
+            android:id="@+id/action_contratoDetalleFragment_to_pagosFragment"
+            app:destination="@id/pagosFragment" />
+    </fragment>
 
+    <fragment
+        android:id="@+id/inquilinoDetalleFragment"
+        android:name="com.luu.tpinmobiliaria.ui.inquilinos.InquilinoDetalleFragment"
+        android:label="Detalle Inquilino"
+        tools:layout="@layout/fragment_detalle_inquilino" />
+
+    <fragment
+        android:id="@+id/pagosFragment"
+        android:name="com.luu.tpinmobiliaria.ui.contratos.PagosFragment"
+        android:label="Pagos del Contrato"
+        tools:layout="@layout/fragment_pagos" />
 
 </navigation>

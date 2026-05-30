@@ -1,4 +1,4 @@
-package com.luu.tpinmobiliaria.ui.contratos;
+package com.luu.tpinmobiliaria.ui.inquilinos;
 
 import android.app.Application;
 import android.content.Context;
@@ -14,12 +14,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ContratosViewModel extends AndroidViewModel {
+public class InquilinosViewModel extends AndroidViewModel {
 
     private Context context;
     private MutableLiveData<List<Inmueble>> mListaInmuebles;
 
-    public ContratosViewModel(@NonNull Application application) {
+    public InquilinosViewModel(@NonNull Application application) {
         super(application);
         this.context = application.getApplicationContext();
     }
@@ -31,7 +31,7 @@ public class ContratosViewModel extends AndroidViewModel {
         return mListaInmuebles;
     }
 
-    public void cargarInmueblesConContrato() {
+    public void cargarInmueblesAlquilados() {
         String token = ApiClient.obtenerToken(context);
 
         if (token.isEmpty()) {
@@ -47,7 +47,7 @@ public class ContratosViewModel extends AndroidViewModel {
                 if (response.isSuccessful() && response.body() != null) {
                     mListaInmuebles.setValue(response.body());
                 } else {
-                    Toast.makeText(context, "Error al obtener inmuebles alquilados", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Error al obtener inmuebles con inquilinos", Toast.LENGTH_SHORT).show();
                 }
             }
 

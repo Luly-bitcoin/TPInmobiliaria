@@ -29,7 +29,6 @@ public class ContratosFragment extends Fragment {
                 bundle.putInt("idInmueble", inmueble.getIdInmueble());
                 androidx.navigation.Navigation.findNavController(binding.getRoot())
                         .navigate(R.id.contratoDetalleFragment, bundle);
-
             });
             binding.rvContratos.setAdapter(adapter);
         });

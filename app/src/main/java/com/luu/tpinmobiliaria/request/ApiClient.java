@@ -8,6 +8,7 @@ import com.google.gson.GsonBuilder;
 import com.luu.tpinmobiliaria.ui.contratos.Contrato;
 import com.luu.tpinmobiliaria.models.Propietario;
 import com.luu.tpinmobiliaria.ui.inmuebles.Inmueble;
+import com.luu.tpinmobiliaria.models.Pago;
 
 import java.util.List;
 
@@ -69,6 +70,7 @@ public class ApiClient {
                 @Header("Authorization") String token,
                 @Body Propietario actualizado
         );
+
         @GET("api/Inmuebles/GetContratoVigente")
         Call<List<Inmueble>> obtenerInmueblesAlquilados(
                 @Header("Authorization") String token
@@ -98,6 +100,12 @@ public class ApiClient {
 
         @GET("api/contratos/inmueble/{id}")
         Call<Contrato> obtenerContrato(
+                @Header("Authorization") String token,
+                @Path("id") int id
+        );
+
+        @GET("api/pagos/contrato/{id}")
+        Call<List<Pago>> obtenerPagosPorContrato(
                 @Header("Authorization") String token,
                 @Path("id") int id
         );
