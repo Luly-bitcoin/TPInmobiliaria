@@ -1,4 +1,4 @@
-package com.luu.tpinmobiliaria.ui.contratos;
+package com.luu.tpinmobiliaria.ui.Pagos;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,9 +28,9 @@ public class PagosAdapter extends RecyclerView.Adapter<PagosAdapter.PagoViewHold
     @Override
     public void onBindViewHolder(@NonNull PagoViewHolder holder, int position) {
         Pago pago = listaPagos.get(position);
-        holder.tvNumPago.setText("Pago N°: " + pago.getNumero());
+        holder.tvNumPago.setText("Pago N°: " + pago.getIdPago());
         holder.tvFechaPago.setText("Fecha: " + pago.getFechaPago());
-        holder.tvImportePago.setText("Importe: $" + String.format("%.0f", pago.getImporte()));
+        holder.tvImportePago.setText("Importe: $" + String.format("%.0f", pago.getMonto()));
     }
 
     @Override

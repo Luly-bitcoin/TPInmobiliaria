@@ -1,64 +1,114 @@
 # TP Inmobiliaria
 
-Aplicación móvil Android desarrollada en Java para la gestión de inmuebles, propietarios y contratos.
+Aplicación móvil Android desarrollada en Java para la gestión integral de inmuebles, contratos, inquilinos y propietarios mediante el consumo de una API REST.
 
-## Características
+## Características Implementadas
 
-* Login de propietarios (Lourdes)
-* Visualización de inmuebles (Lourdes y Milena)
-* Detalle de cada inmueble (Milena)
-* Cambio de disponibilidad (Milena)
-* Perfil del propietario (Lourdes)
-* Cambio de contraseña (Milena)
-* Integración con API REST (Lourdes)
-* Google Maps con vista híbrida y efecto 3D (Lourdes)
-* Visualización de inquilinos y garantes (Milena)
-* Detalles de contratos y pagos (Lourdes y Milena)
-* Llamada en Login (Lourdes y Milena)
+### Autenticación
 
-## Arquitectura
+* Login de propietarios.
+* Persistencia de sesión mediante token JWT.
+* Llamada telefónica directa desde la pantalla de Login.
 
-El proyecto utiliza:
-* Fragmentos
+### Inmuebles
+
+* Listado de inmuebles pertenecientes al propietario.
+* Visualización de imagen principal de cada inmueble.
+* Detalle completo del inmueble.
+* Cambio de disponibilidad (Disponible / No Disponible).
+
+### Contratos
+
+* Listado de contratos vigentes.
+* Visualización de fechas de inicio y finalización.
+* Detalle completo del contrato.
+* Acceso a información del inquilino asociado.
+
+### Inquilinos y Garantes
+
+* Listado de inmuebles actualmente alquilados.
+* Visualización de datos completos del inquilino.
+* Visualización de datos del garante asociado (en xml).
+* Pantalla de detalle con información organizada y de fácil acceso.
+
+### Pagos
+
+* Listado de pagos realizados para cada contrato.
+* Visualización de fecha, número de pago e importe.
+
+### Perfil
+
+* Visualización de datos personales del propietario.
+* Edición de perfil.
+* Cambio de contraseña independiente.
+
+### Mapas
+
+* Integración con Google Maps.
+* Visualización de ubicación de los inmuebles.
+* Vista híbrida.
+* Efecto de inclinación 3D.
+
+### Sensores
+
+* Implementación de acelerómetro del dispositivo.
+* Interacción mediante hardware del teléfono.
+
+### Arquitectura y Tecnologías
+
+* Java
+* Android Studio
+* Fragments
 * ViewModel
 * LiveData
-* Adaptador RecyclerView
-* Retrofit para consumo de API REST
-* Sensor de acelerómetro de hardware
+* RecyclerView
+* Retrofit
+* API REST
+* Google Maps SDK
+* Material Design
+* JWT Authentication
+* SensorManager (Acelerómetro)
 
-## Inmuebles
+## Distribución de Tareas
 
-* Listado de propiedades
-* Estado disponible/no disponible
-* Detalle completo del inmueble
-* Alta de nuevo inmueble con foto
+### Lourdes Villegas
 
-## Contratos
+* Login
+* Integración con API REST
+* Perfil del propietario
+* Google Maps
+* Vistas
+* Pagos
 
-* Listado de contratos vigentes por fecha
-* Detalle del contrato con monto y plazos
+### Milena Miselli
 
-## Inquilinos
+* Inmuebles
+* Detalle de inmuebles
+* Cambio de disponibilidad
+* Cambio de contraseña
+* Inquilinos
+* Interfaz de usuario y validaciones
+* Llamada en el login
 
-* Listado de inmuebles actualmente alquilados
-* Detalle con datos del inquilino y su garante
+## Funcionalidades Finales
 
-## Pagos
-
-* Listado de los recibos de pago para un alquiler en particular
-
-## Perfil
-
-* Edición de datos del propietario
-* Cambio de contraseña por separado
-
-## Mapas
-
-* Visualización de ubicación mediante Google Maps
-* Vista híbrida con inclinación 3D
+✔ Login seguro mediante JWT
+✔ Gestión completa de inmuebles
+✔ Visualización de contratos vigentes
+✔ Consulta de pagos realizados
+✔ Visualización de inquilinos y garantes
+✔ Edición de perfil del propietario
+✔ Cambio de contraseña
+✔ Integración con Google Maps
+✔ Vista híbrida y efecto 3D
+✔ Carga y visualización de imágenes
+✔ Consumo de API REST
+✔ Uso de sensores del dispositivo
 
 ## Autoras
 
-Proyecto realizado por:
-Villegas Maria Lourdes DNI: 46332709
-Miselli Milena DNI: 44164036
+**Villegas María Lourdes**
+DNI: 46.332.709
+
+**Miselli Milena**
+DNI: 44.164.036

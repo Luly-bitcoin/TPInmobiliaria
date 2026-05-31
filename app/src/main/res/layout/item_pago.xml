@@ -11,6 +11,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#03A9F4"
         android:orientation="vertical"
         android:padding="16dp">
 
@@ -19,28 +20,29 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Pago N°: "
-            android:textStyle="bold"
+            android:textColor="@color/black"
             android:textSize="16sp"
-            android:textColor="@color/black" />
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvFechaPago"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:text="Fecha: "
-            android:textSize="14sp"
-            android:layout_marginTop="4dp" />
+            android:textColor="#050000"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/tvImportePago"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Importe: $"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="#10b981"
             android:layout_marginTop="8dp"
-            android:gravity="end" />
+            android:gravity="end"
+            android:text="Importe: $"
+            android:textColor="#1131E2"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>
