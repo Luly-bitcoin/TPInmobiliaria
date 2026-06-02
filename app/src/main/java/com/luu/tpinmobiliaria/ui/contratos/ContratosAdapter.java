@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.luu.tpinmobiliaria.R;
-import com.luu.tpinmobiliaria.ui.inmuebles.Inmueble;
+import com.luu.tpinmobiliaria.models.Inmueble;
 
 import java.util.List;
 

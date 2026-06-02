@@ -25,6 +25,7 @@ import androidx.navigation.Navigation;
 
 import com.google.gson.Gson;
 import com.luu.tpinmobiliaria.R;
+import com.luu.tpinmobiliaria.models.Inmueble;
 import com.luu.tpinmobiliaria.request.ApiClient;
 
 import java.io.File;

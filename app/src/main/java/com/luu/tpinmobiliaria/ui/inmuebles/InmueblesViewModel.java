@@ -9,6 +9,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.luu.tpinmobiliaria.models.Inmueble;
 import com.luu.tpinmobiliaria.request.ApiClient;
 
 import java.util.List;

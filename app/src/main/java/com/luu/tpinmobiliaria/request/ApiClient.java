@@ -5,9 +5,9 @@ import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.luu.tpinmobiliaria.ui.contratos.Contrato;
+import com.luu.tpinmobiliaria.models.Contrato;
 import com.luu.tpinmobiliaria.models.Propietario;
-import com.luu.tpinmobiliaria.ui.inmuebles.Inmueble;
+import com.luu.tpinmobiliaria.models.Inmueble;
 import com.luu.tpinmobiliaria.models.Pago;
 
 import java.util.List;

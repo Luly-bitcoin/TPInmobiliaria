@@ -7,6 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+
+import com.luu.tpinmobiliaria.models.Contrato;
 import com.luu.tpinmobiliaria.request.ApiClient;
 import retrofit2.Call;
 import retrofit2.Callback;

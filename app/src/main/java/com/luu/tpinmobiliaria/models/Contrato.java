@@ -1,6 +1,4 @@
-package com.luu.tpinmobiliaria.ui.contratos;
-
-import com.luu.tpinmobiliaria.ui.inquilinos.Inquilino;
+package com.luu.tpinmobiliaria.models;
 
 public class Contrato {
 

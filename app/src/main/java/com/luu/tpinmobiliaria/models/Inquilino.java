@@ -1,4 +1,4 @@
-package com.luu.tpinmobiliaria.ui.inquilinos;
+package com.luu.tpinmobiliaria.models;
 
 import java.io.Serializable;
 
