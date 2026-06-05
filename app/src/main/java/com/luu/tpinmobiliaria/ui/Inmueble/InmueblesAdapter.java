@@ -1,4 +1,4 @@
-package com.luu.tpinmobiliaria.ui.contratos;
+package com.luu.tpinmobiliaria.ui.Inmueble;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
@@ -16,13 +17,13 @@ import com.luu.tpinmobiliaria.models.Inmueble;
 import com.luu.tpinmobiliaria.request.ApiClient;
 import java.util.List;
 
-public class ContratosAdapter extends RecyclerView.Adapter<ContratosAdapter.ViewHolder> {
+public class InmueblesAdapter extends RecyclerView.Adapter<InmueblesAdapter.ViewHolder> {
 
     private List<Inmueble> lista;
     private Context context;
     private LayoutInflater inflater;
 
-    public ContratosAdapter(List<Inmueble> lista, Context context, LayoutInflater inflater) {
+    public InmueblesAdapter(List<Inmueble> lista, Context context, LayoutInflater inflater) {
         this.lista = lista;
         this.context = context;
         this.inflater = inflater;
@@ -31,7 +32,7 @@ public class ContratosAdapter extends RecyclerView.Adapter<ContratosAdapter.View
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.item_contrato, parent, false);
+        View view = inflater.inflate(R.layout.item_inmueble, parent, false);
         return new ViewHolder(view);
     }
 
@@ -40,16 +41,18 @@ public class ContratosAdapter extends RecyclerView.Adapter<ContratosAdapter.View
         Inmueble inmueble = lista.get(position);
 
         holder.tvDireccion.setText(inmueble.getDireccion());
-        holder.tvTipo.setText(inmueble.getTipo());
         holder.tvPrecio.setText("$ " + inmueble.getPrecio());
 
+        holder.swDisponible.setOnCheckedChangeListener(null);
+        holder.swDisponible.setChecked(inmueble.getDisponible());
+
         String imagen = ApiClient.BASE_URL + inmueble.getImagenUrl();
-        Glide.with(context).load(imagen).into(holder.imgAvatar);
+        Glide.with(context).load(imagen).into(holder.ivFotoInmueble);
 
         holder.itemView.setOnClickListener(v -> {
             Bundle bundle = new Bundle();
             bundle.putSerializable("inmueble", inmueble);
-            Navigation.findNavController(v).navigate(R.id.contratoDetalleFragment, bundle);
+            Navigation.findNavController(v).navigate(R.id.action_nav_inmuebles_to_nav_detalle_inmueble, bundle);
         });
     }
 
@@ -59,15 +62,16 @@ public class ContratosAdapter extends RecyclerView.Adapter<ContratosAdapter.View
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvDireccion, tvPrecio, tvTipo;
-        ImageView imgAvatar;
+        TextView tvDireccion, tvPrecio;
+        ImageView ivFotoInmueble;
+        SwitchCompat swDisponible;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            imgAvatar = itemView.findViewById(R.id.imgAvatar);
+            ivFotoInmueble = itemView.findViewById(R.id.ivFotoInmueble);
             tvDireccion = itemView.findViewById(R.id.tvDireccion);
-            tvTipo = itemView.findViewById(R.id.tvTipo);
             tvPrecio = itemView.findViewById(R.id.tvPrecio);
+            swDisponible = itemView.findViewById(R.id.swDisponible);
         }
     }
 }

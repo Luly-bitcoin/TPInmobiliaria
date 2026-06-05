@@ -8,32 +8,26 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-
-import com.luu.tpinmobiliaria.R;
 import com.luu.tpinmobiliaria.databinding.FragmentContratosBinding;
 
 public class ContratosFragment extends Fragment {
 
     private FragmentContratosBinding binding;
-    private ContratosViewModel viewModel;
+    private ContratosViewModel vm;
 
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentContratosBinding.inflate(inflater, container, false);
-        viewModel = new ViewModelProvider(this).get(ContratosViewModel.class);
+        vm = new ViewModelProvider(this).get(ContratosViewModel.class);
 
         binding.rvContratos.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        viewModel.getMListaInmuebles().observe(getViewLifecycleOwner(), inmuebles -> {
-            ContratosAdapter adapter = new ContratosAdapter(inmuebles, inmueble -> {
-                Bundle bundle = new Bundle();
-                bundle.putInt("idInmueble", inmueble.getIdInmueble());
-                androidx.navigation.Navigation.findNavController(binding.getRoot())
-                        .navigate(R.id.contratoDetalleFragment, bundle);
-            });
+        vm.getMListaInmuebles().observe(getViewLifecycleOwner(), lista -> {
+            ContratosAdapter adapter = new ContratosAdapter(lista, getContext(), getLayoutInflater());
             binding.rvContratos.setAdapter(adapter);
         });
 
-        viewModel.cargarInmueblesConContrato();
+        vm.cargarInmueblesConContrato();
 
         return binding.getRoot();
     }

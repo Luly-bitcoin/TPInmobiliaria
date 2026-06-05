@@ -8,29 +8,24 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-
-import com.luu.tpinmobiliaria.R;
 import com.luu.tpinmobiliaria.databinding.FragmentInquilinosBinding;
-import com.luu.tpinmobiliaria.ui.contratos.ContratosAdapter;
+import com.luu.tpinmobiliaria.models.Inmueble;
+import java.util.List;
 
 public class InquilinosFragment extends Fragment {
 
     private FragmentInquilinosBinding binding;
     private InquilinosViewModel viewModel;
 
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentInquilinosBinding.inflate(inflater, container, false);
         viewModel = new ViewModelProvider(this).get(InquilinosViewModel.class);
 
         binding.rvInquilinos.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        viewModel.getMListaInmuebles().observe(getViewLifecycleOwner(), inmuebles -> {
-            ContratosAdapter adapter = new ContratosAdapter(inmuebles, inmueble -> {
-                Bundle bundle = new Bundle();
-                bundle.putInt("idInmueble", inmueble.getIdInmueble());
-                androidx.navigation.Navigation.findNavController(binding.getRoot())
-                        .navigate(R.id.inquilinoDetalleFragment, bundle);
-            });
+        viewModel.getMListaInmuebles().observe(getViewLifecycleOwner(), listaInmuebles -> {
+            InquilinosAdapter adapter = new InquilinosAdapter(listaInmuebles, getContext(), inflater);
             binding.rvInquilinos.setAdapter(adapter);
         });
 

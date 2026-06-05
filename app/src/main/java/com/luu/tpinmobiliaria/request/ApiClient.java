@@ -2,16 +2,13 @@ package com.luu.tpinmobiliaria.request;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.luu.tpinmobiliaria.ui.contratos.Contrato;
 import com.luu.tpinmobiliaria.models.Propietario;
-import com.luu.tpinmobiliaria.ui.inmuebles.Inmueble;
+import com.luu.tpinmobiliaria.models.Inmueble;
 import com.luu.tpinmobiliaria.models.Pago;
-
 import java.util.List;
-
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -33,7 +30,6 @@ public class ApiClient {
     public final static String BASE_URL = "https://capacitacion.alwaysdata.net/";
 
     public static MiServicioInmobiliaria getServicio(){
-
         Gson gson = new GsonBuilder()
                 .setLenient()
                 .create();
@@ -90,6 +86,12 @@ public class ApiClient {
                 @Body Inmueble inmueble
         );
 
+        @PUT("api/Inmuebles/cambiarDisponibilidad")
+        Call<Inmueble> cambiarDisponibilidad(
+                @Header("Authorization") String token,
+                @Body Inmueble inmueble
+        );
+
         @Multipart
         @POST("api/Inmuebles/cargar")
         Call<Inmueble> cargarInmueble(
@@ -112,33 +114,19 @@ public class ApiClient {
     }
 
     public static void recuperarToken(Context context, String token){
-
-        SharedPreferences sp =
-                context.getSharedPreferences("token.xml",
-                        Context.MODE_PRIVATE);
-
+        SharedPreferences sp = context.getSharedPreferences("token.xml", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
-
         editor.putString("token", token);
-
         editor.apply();
     }
 
     public static String usarToken(Context context){
-
-        SharedPreferences sp =
-                context.getSharedPreferences("token.xml",
-                        Context.MODE_PRIVATE);
-
+        SharedPreferences sp = context.getSharedPreferences("token.xml", Context.MODE_PRIVATE);
         return sp.getString("token", null);
     }
 
     public static String obtenerToken(Context context){
-
-        SharedPreferences sp =
-                context.getSharedPreferences("token.xml",
-                        Context.MODE_PRIVATE);
-
+        SharedPreferences sp = context.getSharedPreferences("token.xml", Context.MODE_PRIVATE);
         return sp.getString("token", "");
     }
 }

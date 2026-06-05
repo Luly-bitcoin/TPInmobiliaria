@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/nav_inmuebles"
-        android:name="com.luu.tpinmobiliaria.ui.inmuebles.InmueblesFragment"
+        android:name="com.luu.tpinmobiliaria.ui.Inmueble.InmueblesFragment"
         android:label="Mis Inmuebles"
         tools:layout="@layout/fragment_inmuebles">
         <action
@@ -61,13 +61,13 @@
 
     <fragment
         android:id="@+id/nav_detalle_inmueble"
-        android:name="com.luu.tpinmobiliaria.ui.inmuebles.DetalleInmuebleFragment"
+        android:name="com.luu.tpinmobiliaria.ui.Inmueble.DetalleInmuebleFragment"
         android:label="Detalle de Inmueble"
         tools:layout="@layout/fragment_detalle_inmueble" />
 
     <fragment
         android:id="@+id/nav_agregar_inmueble"
-        android:name="com.luu.tpinmobiliaria.ui.inmuebles.AgregarInmuebleFragment"
+        android:name="com.luu.tpinmobiliaria.ui.Inmueble.AgregarInmuebleFragment"
         android:label="Agregar Inmueble"
         tools:layout="@layout/fragment_agregar_inmueble" />
 

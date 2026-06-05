@@ -1,4 +1,4 @@
-package com.luu.tpinmobiliaria.ui.inmuebles;
+package com.luu.tpinmobiliaria.ui.Inmueble;
 
 import com.google.gson.annotations.SerializedName;
 

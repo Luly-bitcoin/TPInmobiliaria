@@ -1,29 +1,21 @@
 package com.luu.tpinmobiliaria;
 
-import static com.luu.tpinmobiliaria.R.layout.activity_login;
-
 import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.luu.tpinmobiliaria.request.ApiClient;
+import androidx.lifecycle.ViewModelProvider;
+import com.luu.tpinmobiliaria.databinding.ActivityLoginBinding;
+import com.luu.tpinmobiliaria.ui.LoginActivityViewModel;
 
 public class LoginActivity extends AppCompatActivity implements SensorEventListener {
 
-    private EditText etCorreo, etClave;
-    private Button btnIngresar;
-    private TextView tvOlvidePassword;
+    private ActivityLoginBinding binding;
+    private LoginActivityViewModel vm;
 
     private SensorManager sensorManager;
     private Sensor acelerometro;
@@ -34,12 +26,11 @@ public class LoginActivity extends AppCompatActivity implements SensorEventListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(activity_login);
 
-        etCorreo = findViewById(R.id.etEmail);
-        etClave = findViewById(R.id.etPassword);
-        btnIngresar = findViewById(R.id.btnLogin);
-        tvOlvidePassword = findViewById(R.id.tvOlvidePassword);
+        binding = ActivityLoginBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        vm = new ViewModelProvider(this).get(LoginActivityViewModel.class);
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         if (sensorManager != null) {
@@ -50,67 +41,27 @@ public class LoginActivity extends AppCompatActivity implements SensorEventListe
         aceleracionActual = SensorManager.GRAVITY_EARTH;
         agite = 0.00f;
 
-        btnIngresar.setOnClickListener(v -> login());
-        tvOlvidePassword.setOnClickListener(v -> olvideContrasena());
-    }
+        vm.getMLoginExitoso().observe(this, exitoso -> {
+            if (exitoso) {
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
-    private void login(){
+        vm.getMIntentLlamada().observe(this, intentLlamada -> {
+            if (intentLlamada != null) {
+                startActivity(intentLlamada);
+            }
+        });
 
-        String usuario = etCorreo.getText().toString().trim();
-        String clave = etClave.getText().toString().trim();
+        binding.btnLogin.setOnClickListener(view -> {
+            vm.loguear(binding.etEmail.getText().toString(), binding.etPassword.getText().toString());
+        });
 
-        if (usuario.isEmpty() || clave.isEmpty()) {
-            Toast.makeText(LoginActivity.this, "Complete los campos", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        ApiClient.getServicio()
-                .loginForm(usuario, clave)
-                .enqueue(new retrofit2.Callback<String>() {
-
-                    @Override
-                    public void onResponse(retrofit2.Call<String> call,
-                                           retrofit2.Response<String> response) {
-
-                        if (response.isSuccessful() && response.body() != null) {
-
-                            String token = response.body();
-
-                            ApiClient.recuperarToken(LoginActivity.this, token);
-
-                            Toast.makeText(LoginActivity.this,
-                                    "Login exitoso",
-                                    Toast.LENGTH_SHORT).show();
-
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            startActivity(intent);
-                            finish();
-
-                        } else {
-                            Toast.makeText(LoginActivity.this,
-                                    "Usuario o clave incorrectos",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(retrofit2.Call<String> call, Throwable t) {
-                        Toast.makeText(LoginActivity.this,
-                                "Error de conexión: " + t.getMessage(),
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
-    }
-
-    private void olvideContrasena() {
-        String correo = etCorreo.getText().toString();
-
-        if (correo.isEmpty()) {
-            Toast.makeText(LoginActivity.this, "Por favor, ingrese su correo electrónico para restablecer la contraseña", Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        Toast.makeText(LoginActivity.this, "Se ha enviado un correo de recuperación a: " + correo, Toast.LENGTH_LONG).show();
+        binding.tvOlvidePassword.setOnClickListener(view -> {
+            vm.resetear(binding.etEmail.getText().toString());
+        });
     }
 
     @Override
@@ -121,14 +72,11 @@ public class LoginActivity extends AppCompatActivity implements SensorEventListe
 
         aceleracionUltima = aceleracionActual;
         aceleracionActual = (float) Math.sqrt((double) (x * x + y * y + z * z));
+
+        vm.verificarAgite(x, y, z, aceleracionUltima, aceleracionActual, agite);
+
         float delta = aceleracionActual - aceleracionUltima;
         agite = agite * 0.9f + delta;
-
-        if (agite > 12) {
-            Intent intent = new Intent(Intent.ACTION_DIAL);
-            intent.setData(Uri.parse("tel:2657000000"));
-            startActivity(intent);
-        }
     }
 
     @Override
