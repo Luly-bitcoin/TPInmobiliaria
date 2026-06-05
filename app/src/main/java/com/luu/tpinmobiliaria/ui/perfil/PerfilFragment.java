@@ -19,56 +19,41 @@ public class PerfilFragment extends Fragment {
         binding = FragmentPerfilBinding.inflate(inflater, container, false);
         viewModel = new ViewModelProvider(this).get(PerfilViewModel.class);
 
-        viewModel.getPropietario().observe(getViewLifecycleOwner(), new androidx.lifecycle.Observer<Propietario>() {
-            @Override
-            public void onChanged(Propietario propietario) {
-                binding.etId.setText(String.valueOf(propietario.getId()));
-                binding.etDni.setText(String.valueOf(propietario.getDni()));
-                binding.etNombre.setText(propietario.getNombre());
-                binding.etApellido.setText(propietario.getApellido());
-                binding.etEmail.setText(propietario.getEmail());
-                binding.etTelefono.setText(propietario.getTelefono());
-                binding.etClave.setText(propietario.getClave());
-            }
+        viewModel.getPropietario().observe(getViewLifecycleOwner(), propietario -> {
+            binding.etId.setText(String.valueOf(propietario.getId()));
+            binding.etDni.setText(String.valueOf(propietario.getDni()));
+            binding.etNombre.setText(propietario.getNombre());
+            binding.etApellido.setText(propietario.getApellido());
+            binding.etEmail.setText(propietario.getEmail());
+            binding.etTelefono.setText(propietario.getTelefono());
+            binding.etClave.setText(propietario.getClave());
         });
 
-        viewModel.getEditable().observe(getViewLifecycleOwner(), new androidx.lifecycle.Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean aBoolean) {
-                binding.etNombre.setEnabled(aBoolean);
-                binding.etApellido.setEnabled(aBoolean);
-                binding.etEmail.setEnabled(aBoolean);
-                binding.etTelefono.setEnabled(aBoolean);
+        viewModel.getEditable().observe(getViewLifecycleOwner(), aBoolean -> {
+            binding.etNombre.setEnabled(aBoolean);
+            binding.etApellido.setEnabled(aBoolean);
+            binding.etEmail.setEnabled(aBoolean);
+            binding.etTelefono.setEnabled(aBoolean);
 
-                if (aBoolean) {
-                    binding.btnEditar.setText("GUARDAR");
-                } else {
-                    binding.btnEditar.setText("EDITAR");
-                }
+            if (aBoolean) {
+                binding.btnEditar.setText("GUARDAR");
+            } else {
+                binding.btnEditar.setText("EDITAR");
             }
         });
 
         viewModel.obtenerDatos();
 
-        binding.btnEditar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String textoBoton = binding.btnEditar.getText().toString();
-                if (textoBoton.equals("EDITAR")) {
-                    viewModel.cambiarEstadoEditable(true);
-                } else {
-                    Propietario p = new Propietario();
-                    p.setId(Integer.parseInt(binding.etId.getText().toString()));
-                    p.setDni(binding.etDni.getText().toString());
-                    p.setNombre(binding.etNombre.getText().toString());
-                    p.setApellido(binding.etApellido.getText().toString());
-                    p.setEmail(binding.etEmail.getText().toString());
-                    p.setTelefono(binding.etTelefono.getText().toString());
-                    p.setClave(binding.etClave.getText().toString());
+        binding.btnEditar.setOnClickListener(v -> {
+            String id = binding.etId.getText().toString();
+            String dni = binding.etDni.getText().toString();
+            String nombre = binding.etNombre.getText().toString();
+            String apellido = binding.etApellido.getText().toString();
+            String email = binding.etEmail.getText().toString();
+            String telefono = binding.etTelefono.getText().toString();
+            String clave = binding.etClave.getText().toString();
 
-                    viewModel.actualizarDatos(p);
-                }
-            }
+            viewModel.gestionarBotonEditar(id, dni, nombre, apellido, email, telefono, clave);
         });
 
         return binding.getRoot();

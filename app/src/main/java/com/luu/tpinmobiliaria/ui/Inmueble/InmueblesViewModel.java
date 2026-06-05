@@ -1,4 +1,4 @@
-package com.luu.tpinmobiliaria.ui.contratos;
+package com.luu.tpinmobiliaria.ui.Inmueble;
 
 import android.app.Application;
 import android.widget.Toast;
@@ -13,11 +13,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ContratosViewModel extends AndroidViewModel {
+public class InmueblesViewModel extends AndroidViewModel {
 
     private MutableLiveData<List<Inmueble>> mListaInmuebles;
 
-    public ContratosViewModel(@NonNull Application application) {
+    public InmueblesViewModel(@NonNull Application application) {
         super(application);
     }
 
@@ -28,7 +28,7 @@ public class ContratosViewModel extends AndroidViewModel {
         return mListaInmuebles;
     }
 
-    public void cargarInmueblesConContrato() {
+    public void cargarInmuebles() {
         String token = ApiClient.obtenerToken(getApplication());
         if (token == null || token.isEmpty()) {
             Toast.makeText(getApplication(), "Token no válido", Toast.LENGTH_LONG).show();
@@ -37,13 +37,13 @@ public class ContratosViewModel extends AndroidViewModel {
 
         String tokenBearer = "Bearer " + token;
 
-        ApiClient.getServicio().obtenerInmueblesAlquilados(tokenBearer).enqueue(new Callback<List<Inmueble>>() {
+        ApiClient.getServicio().getInmuebles(tokenBearer).enqueue(new Callback<List<Inmueble>>() {
             @Override
             public void onResponse(Call<List<Inmueble>> call, Response<List<Inmueble>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     mListaInmuebles.setValue(response.body());
                 } else {
-                    Toast.makeText(getApplication(), "Error al obtener inmuebles alquilados", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplication(), "Error al obtener inmuebles", Toast.LENGTH_SHORT).show();
                 }
             }
 

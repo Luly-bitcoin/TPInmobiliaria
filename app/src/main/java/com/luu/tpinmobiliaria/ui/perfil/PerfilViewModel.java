@@ -53,11 +53,34 @@ public class PerfilViewModel extends AndroidViewModel {
                 Toast.makeText(getApplication(), "Error de conexión", Toast.LENGTH_SHORT).show();
             }
         });
+        if (mEditable == null) {
+            mEditable = new MutableLiveData<>();
+        }
         mEditable.setValue(false);
     }
 
     public void cambiarEstadoEditable(boolean estado) {
+        if (mEditable == null) {
+            mEditable = new MutableLiveData<>();
+        }
         mEditable.setValue(estado);
+    }
+
+    public void gestionarBotonEditar(String id, String dni, String nombre, String apellido, String email, String telefono, String clave) {
+        if (mEditable != null && mEditable.getValue() != null && mEditable.getValue()) {
+            Propietario p = new Propietario();
+            p.setId(Integer.parseInt(id));
+            p.setDni(dni);
+            p.setNombre(nombre);
+            p.setApellido(apellido);
+            p.setEmail(email);
+            p.setTelefono(telefono);
+            p.setClave(clave);
+
+            actualizarDatos(p);
+        } else {
+            cambiarEstadoEditable(true);
+        }
     }
 
     public void actualizarDatos(Propietario propietario) {

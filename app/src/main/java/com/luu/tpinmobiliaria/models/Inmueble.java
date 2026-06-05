@@ -1,4 +1,8 @@
+<<<<<<<< HEAD:app/src/main/java/com/luu/tpinmobiliaria/models/Inmueble.java
 package com.luu.tpinmobiliaria.models;
+========
+package com.luu.tpinmobiliaria.ui.Inmueble;
+>>>>>>>> 22ce8808de50ab232e3d1a5d3f9a42f3d13fdad5:app/src/main/java/com/luu/tpinmobiliaria/ui/Inmueble/Inmueble.java
 
 import com.google.gson.annotations.SerializedName;
 
